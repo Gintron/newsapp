@@ -16,7 +16,7 @@ class UserFeedController extends Controller
      * Retrieve the personalized news feed for the authenticated user.
      *
      * @OA\Get(
-     *     path="/api/user/feed",
+     *     path="/api/my-feed",
      *     tags={"News"},
      *     summary="Retrieve the personalized news feed for the authenticated user",
      *     description="Fetch a personalized news feed based on the user's preferences (sources and categories), with pagination support.",
