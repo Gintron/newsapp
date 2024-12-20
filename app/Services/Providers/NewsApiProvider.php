@@ -3,6 +3,7 @@
 namespace App\Services\Providers;
 
 use App\Dto\News;
+use App\Enums\NewsSource;
 use App\Models\SourceCategory;
 use Illuminate\Database\Eloquent\Collection;
 use jcobhams\NewsApi\NewsApi;
@@ -23,7 +24,7 @@ class NewsApiProvider implements NewsProviderInterface
         $news = [];
         foreach ($responses as $key => $response) {
             foreach ($response->articles as $article) {
-                $news[] = new News($article->title, $key, "newsapi", now(), now());
+                $news[] = new News($article->title, $key, NewsSource::NEWSAPI, now(), now());
             }
         }
         return $news;
@@ -31,6 +32,6 @@ class NewsApiProvider implements NewsProviderInterface
 
     public function getCategories(): Collection
     {
-        return SourceCategory::with("category")->where("source", "newsapi")->get();
+        return SourceCategory::with("category")->where("source", NewsSource::NEWSAPI)->get();
     }
 }

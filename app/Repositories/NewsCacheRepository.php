@@ -11,13 +11,11 @@ class NewsCacheRepository
     {
         $news = Cache::get("news_page_$page");
 
-        if ($news === null) {
-            $offset = 0;
-            if ($page > 1) {
-                $offset = $page * 10 - 10;
-            }
+        if (!$news) {
+            $offset = $this->getOffset($page);
 
             $news = News::orderBy('created_at', 'desc')->offset($offset)->paginate(10);
+            
             Cache::put("news_page_$page", $news, now()->addHours(8));
         }
         return $news;
@@ -29,13 +27,59 @@ class NewsCacheRepository
 
         if (!$news) {
             $news = News::find($id);
-           
-            if(!$news) return null;
-            
+
+            if (!$news) return null;
+
             $news = Cache::rememberForever("news_$id", function () use ($news) {
                 return $news;
             });
         }
         return $news;
+    }
+
+    public function getUserFeed(int $id, int $page, array $preferences)
+    {
+        $userNews = Cache::get("user_feed_$id" . "_" . "$page");
+
+        if (!$userNews) {
+            $offset = $this->getOffset($page);
+
+            $userNews = News::orderBy('created_at', 'desc')->whereIn("source", $preferences["sources"])->whereIn("source", $preferences["categories"])->offset($offset)->paginate(10);
+            Cache::put("user_feed_$id" . "_" . "$page", $userNews, now()->addHours(8));
+        }
+        return $userNews;
+    }
+
+    public function getFilteredNews(int $page, ?string $date, ?int $category, ?string $source)
+    {
+        $filteredNews = Cache::get("filtered_news_$page" . "_$date" . "_$category" . "_$source");
+
+        if (!$filteredNews) {
+            $news = News::query();
+
+            if ($category) {
+                $news = $news->where("category_id", $category);
+            }
+            if ($source) {
+                $news = $news->where("source", $source);
+            }
+            if ($date) {
+                $news = $news->whereDate("created_at", $date);
+            }
+            $offset = $this->getOffset($page);
+            $filteredNews = $news->offset($offset)->paginate(10);
+            Cache::remember("filtered_news_$page" . "_$date" . "_$category" . "_$source", now()->addHours(8), function () use ($filteredNews) {
+                return $filteredNews;
+            });
+        }
+        return $filteredNews;
+    }
+
+    private function getOffset(int $page): int 
+    {
+        if ($page > 1) {
+            return $page * 10 - 10;
+        }
+        return 0;
     }
 }

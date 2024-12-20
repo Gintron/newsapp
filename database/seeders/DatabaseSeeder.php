@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Enums\NewsSource;
 use App\Models\Category;
 use App\Models\SourceCategory;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,63 +25,63 @@ class DatabaseSeeder extends Seeder
             [
                 [
                     "category_name" => "health",
-                    "source" => "newsapi",
+                    "source" => NewsSource::NEWSAPI,
                     "category_id" => Category::where("slug", "health")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "sports",
-                    "source" => "newsapi",
+                    "source" => NewsSource::NEWSAPI,
                     "category_id" => Category::where("slug", "sport")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "general",
-                    "source" => "newsapi",
+                    "source" => NewsSource::NEWSAPI,
                     "category_id" => Category::where("slug", "general")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "healthcare-network",
-                    "source" => "guardian",
+                    "source" => NewsSource::GUARDIAN,
                     "category_id" => Category::where("slug", "health")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "sport",
-                    "source" => "guardian",
+                    "source" => NewsSource::GUARDIAN,
                     "category_id" => Category::where("slug", "sport")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "world",
-                    "source" => "guardian",
+                    "source" => NewsSource::GUARDIAN,
                     "category_id" => Category::where("slug", "general")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "Health",
-                    "source" => "new_york_times",
+                    "source" => NewsSource::NEW_YORK_TIMES,
                     "category_id" => Category::where("slug", "health")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "Sports",
-                    "source" => "new_york_times",
+                    "source" => NewsSource::NEW_YORK_TIMES,
                     "category_id" => Category::where("slug", "sport")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()
                 ],
                 [
                     "category_name" => "News",
-                    "source" => "new_york_times",
+                    "source" => NewsSource::NEW_YORK_TIMES,
                     "category_id" => Category::where("slug", "general")->first()->id,
                     'created_at' => now(),
                     'updated_at' => now()

@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "algolia/algoliasearch-client-php": "^4.11",
+        "darkaonline/l5-swagger": "^8.6",
         "jcobhams/newsapi": "^1.0",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",

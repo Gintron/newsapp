@@ -3,6 +3,7 @@
 namespace App\Services\Providers;
 
 use App\Dto\News;
+use App\Enums\NewsSource;
 use App\Models\SourceCategory;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -20,7 +21,7 @@ class GuardianProvider implements NewsProviderInterface
         $news = [];
         foreach ($responses as $key => $category) {
             foreach ($category["response"]["results"] as $article) {
-                $news[] = new News($article["webTitle"], $key, "guardian", now(), now());
+                $news[] = new News($article["webTitle"], $key, NewsSource::GUARDIAN, now(), now());
             }
         }
         return $news;
@@ -28,7 +29,7 @@ class GuardianProvider implements NewsProviderInterface
 
     public function getCategories(): Collection
     {
-        return SourceCategory::with("category")->where("source", "guardian")->get();
+        return SourceCategory::with("category")->where("source", NewsSource::GUARDIAN)->get();
     }
 
     private function getNewsForCategory(string $category, int $numberOfNews)

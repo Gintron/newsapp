@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\News as ModelNews;
+use App\Models\News;
 use App\Repositories\NewsCacheRepository;
 use App\Services\Providers\GuardianProvider;
 use App\Services\Providers\NewsApiProvider;
 use App\Services\Providers\NewsProviderInterface;
 use App\Services\Providers\NewYorkTimesProvider;
+use Illuminate\Support\Facades\Cache;
 
-class News
+class NewsService
 {
     public function __construct(
         private readonly NewsApiProvider $newsApiProvider,
@@ -36,11 +37,8 @@ class News
     {
         $news = array_map(fn($newsDto) => $newsDto->toArray(), $this->getNews());
 
-        ModelNews::insert($news);
-    }
+        News::insert($news);
 
-    public function getNewsPage(int $page = 1)
-    {
-        return $this->newsCacheRepository->getPage($page);
+        Cache::flush();
     }
 }
