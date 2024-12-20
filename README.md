@@ -52,23 +52,11 @@ Copy the example `.env` file:
 cp .env.example .env
 ```
 
-Modify the `.env` and setup the following keys: ALGOLIA_APP_ID, ALGOLIA_SECRET, NEWSAPI_API_KEY, GUARDIAN_API_KEY, NEWYORKTIMES_API_KEY.
+Modify the `.env` and setup the following keys: DB_CONNECTION, DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, DB_PASSWORD, ALGOLIA_APP_ID, ALGOLIA_SECRET, NEWSAPI_API_KEY, GUARDIAN_API_KEY, NEWYORKTIMES_API_KEY.
 
 ---
 
-## Step 5: Generate the Application Key
-
-Run the following command to generate the application key:
-
-```bash
-./vendor/bin/sail artisan key:generate
-```
-
-This will set the `APP_KEY` in the `.env` file.
-
----
-
-## Step 6: Run Database Migrations
+## Step 5: Run Database Migrations
 
 Run the migrations:
 
@@ -78,7 +66,7 @@ Run the migrations:
 
 ---
 
-## Step 7: Run the Scheduler
+## Step 6: Run the Scheduler
 
 ```bash
 ./vendor/bin/sail artisan schedule:run
@@ -86,7 +74,7 @@ Run the migrations:
 
 ---
 
-## Step 8: Run the Queue
+## Step 7: Run the Queue
 
 Run the queue so the news can be fetched.
 
@@ -96,12 +84,21 @@ Run the queue so the news can be fetched.
 
 ---
 
-## Step 9: Access the Application
+## Step 8: Import News to Algolia
+
+
+```bash
+./vendor/bin/sail artisan scout:import "App\Models\News"
+```
+
+---
+
+## Step 8: Access the Application
 
 You can now access the application in your browser at:
 
 ```
-http://localhost
+http://localhost/api/documentation
 ```
 
 ---
