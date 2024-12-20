@@ -867,14 +867,14 @@
                 }
             }
         },
-        "/api/user/feed": {
+        "/api/my-feed": {
             "get": {
                 "tags": [
                     "News"
                 ],
                 "summary": "Retrieve the personalized news feed for the authenticated user",
                 "description": "Fetch a personalized news feed based on the user's preferences (sources and categories), with pagination support.",
-                "operationId": "33188e71bc3bec6d22ad9e6e61984f89",
+                "operationId": "e0114b9b6c9f2a31b3823d7f31beb651",
                 "parameters": [
                     {
                         "name": "page",
