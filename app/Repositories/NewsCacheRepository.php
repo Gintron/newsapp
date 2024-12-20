@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\News;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
 
 class NewsCacheRepository
@@ -15,7 +16,7 @@ class NewsCacheRepository
             $offset = $this->getOffset($page);
 
             $news = News::orderBy('created_at', 'desc')->offset($offset)->paginate(10);
-            
+
             Cache::put("news_page_$page", $news, now()->addHours(8));
         }
         return $news;
@@ -44,7 +45,14 @@ class NewsCacheRepository
         if (!$userNews) {
             $offset = $this->getOffset($page);
 
-            $userNews = News::orderBy('created_at', 'desc')->whereIn("source", $preferences["sources"])->whereIn("source", $preferences["categories"])->offset($offset)->paginate(10);
+            $userNews = News::whereIn("source", $preferences["sources"])
+                ->whereHas("category", function (Builder $query) use ($preferences) {
+                    $query->whereIn("slug", $preferences["categories"]);
+                })
+                ->offset($offset)
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
             Cache::put("user_feed_$id" . "_" . "$page", $userNews, now()->addHours(8));
         }
         return $userNews;
@@ -75,7 +83,7 @@ class NewsCacheRepository
         return $filteredNews;
     }
 
-    private function getOffset(int $page): int 
+    private function getOffset(int $page): int
     {
         if ($page > 1) {
             return $page * 10 - 10;

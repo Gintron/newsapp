@@ -61,7 +61,10 @@ class UserFeedController extends Controller
      *             type="object",
      *             @OA\Property(property="message", type="string", example="No news found!")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"sanctum": {}}
+     *     }
      * )
      */
     public function __invoke(Request $request)
