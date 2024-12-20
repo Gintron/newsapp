@@ -27,9 +27,9 @@ class News
     {
         $guardianNews = $this->getNewsFromProvider($this->guardianProvider, 10);
         $newsApiNews =  $this->getNewsFromProvider($this->newsApiProvider, 10);
-        $newYorkTimes = $this->getNewsFromProvider($this->newYorkTimesProvider, 10); 
-        
-        return array_merge($guardianNews,$newsApiNews, $newYorkTimes );
+        $newYorkTimes = $this->getNewsFromProvider($this->newYorkTimesProvider, 10);
+
+        return array_merge($guardianNews, $newsApiNews, $newYorkTimes);
     }
 
     public function storeNews(): void

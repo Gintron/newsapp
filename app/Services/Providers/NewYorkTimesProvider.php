@@ -20,7 +20,7 @@ class NewYorkTimesProvider implements NewsProviderInterface
         $news = [];
         foreach ($responses as $key => $category) {
             foreach ($category["response"]["docs"] as $article) {
-                $news[] = new News($article["headline"]["main"], $key, "new_york_times");
+                $news[] = new News($article["headline"]["main"], $key, "new_york_times", now(), now());
             }
         }
         return $news;

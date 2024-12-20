@@ -16,11 +16,11 @@ class GuardianProvider implements NewsProviderInterface
         foreach ($sourceCategories as $sourceCategory) {
             $responses[$sourceCategory->category->id] = $this->getNewsForCategory($sourceCategory->category_name, $numberOfNews);
         }
-
+        
         $news = [];
         foreach ($responses as $key => $category) {
             foreach ($category["response"]["results"] as $article) {
-                $news[] = new News($article["webTitle"], $key, "guardian");
+                $news[] = new News($article["webTitle"], $key, "guardian", now(), now());
             }
         }
         return $news;

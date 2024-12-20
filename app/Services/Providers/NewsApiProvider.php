@@ -23,7 +23,7 @@ class NewsApiProvider implements NewsProviderInterface
         $news = [];
         foreach ($responses as $key => $response) {
             foreach ($response->articles as $article) {
-                $news[] = new News($article->title, $key, "newsapi");
+                $news[] = new News($article->title, $key, "newsapi", now(), now());
             }
         }
         return $news;

@@ -2,12 +2,16 @@
 
 namespace App\Dto;
 
+use Carbon\Carbon;
+
 class News 
 {
     public function __construct(
         public readonly string $title,
         public readonly int $category_id,
         public readonly string $source,
+        public readonly Carbon $created_at,
+        public readonly Carbon $updated_at,
     ) {}
 
     public function toArray(): array
@@ -16,6 +20,8 @@ class News
             "title" => $this->title,
             "category_id" => $this->category_id,
             "source" => $this->source,
+            "created_at" => $this->created_at,
+            "updated_at" => $this->updated_at
         ];
     }
 }
